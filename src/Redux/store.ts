@@ -8,4 +8,7 @@ const store = configureStore({
     },
     devTools: true,
 });
+
+export const ApiDispatch = typeof store.dispatch;
+
 export default store;
