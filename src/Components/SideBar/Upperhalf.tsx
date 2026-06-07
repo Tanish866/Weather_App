@@ -1,8 +1,13 @@
 import { IoSearch } from "react-icons/io5";
 
 import cloudyNight from "../../Assets/cloudyNight.png";
+import { useSelector } from "react-redux";
+import type ReduxState from "../../Interfaces/ReduxState";
 
 function Upperhalf() {
+
+    const currentData = useSelector((state : ReduxState) => state.forecast.data.currentData);
+
     return (
         <div className="h-[60%] w-full p-4 flex flex-col justify-center ">
             <div className="flex  rounded-tl-2xl rounded-bl-2xl rounded-br-2xl rounded-tr-2xl overflow-hidden border-2 border-sky-300">
@@ -23,7 +28,7 @@ function Upperhalf() {
             </div>
             <div className="flex flex-col items-start">
                 <div className="font-semibold l text-black flex items-start">
-                    <div className="text-8xl">28.4</div>
+                    <div className="text-8xl">{currentData.temp_c}</div>
                     <div className="text-7xl">°C</div>
                 </div>
                 <div className="text-black text-xl">

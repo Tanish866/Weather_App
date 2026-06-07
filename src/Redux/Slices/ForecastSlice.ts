@@ -68,7 +68,7 @@ const forecastSlice = createSlice({
 
             // setting currrent
             state.data.currentData.uv = current.uv;
-            state.data.currentData.wind_kmph = current.wind_kmph;
+            state.data.currentData.wind_kmph = current.wind_kph;
             state.data.currentData.humidity = current.humidity;
             state.data.currentData.vis_km = current.vis_km;
             state.data.currentData.aqi = current.air_quality.pm2_5;
