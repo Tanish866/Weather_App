@@ -23,7 +23,7 @@ export default defineConfig([
       'simple-import-sort': simpleImportSort,
     },
     rules: {
-      semi: ['error', 'always'],
+      '@typescript-eslint/semi': ['error', 'always'],
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
     }
