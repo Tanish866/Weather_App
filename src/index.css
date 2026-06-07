@@ -3,3 +3,11 @@
 @plugin "daisyui" {
   themes: light --default, dark --prefersdark, cupcake;
 }
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}

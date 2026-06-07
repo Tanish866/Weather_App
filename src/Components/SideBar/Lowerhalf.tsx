@@ -21,7 +21,6 @@ function Lowerhalf(){
                 </div>
             </div>
 
-            {/* Location pinned to bottom */}
             <div className="flex items-center text-black gap-2 mt-auto">
                 <MdLocationPin/>
                 <span>Your Location</span>
