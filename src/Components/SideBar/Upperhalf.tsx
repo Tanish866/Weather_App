@@ -1,10 +1,30 @@
 import { IoSearch } from "react-icons/io5";
-
 import cloudyNight from "../../Assets/cloudyNight.png";
 import { useSelector } from "react-redux";
 import type ReduxState from "../../Interfaces/ReduxState";
+import { useEffect, useState } from "react";
+import { fetchData } from "../../Redux/Slices/ForecastSlice";
+import { useAppDispatch } from "../../Hooks/useAppDispatch";
+import axios from "axios";
 
 function Upperhalf() {
+
+    const dispatch = useAppDispatch();
+    const [city, setCity] = useState<String>('');
+
+    useEffect(() =>{
+        navigator.geolocation.getCurrentPosition(async (position) =>{
+            console.log(position.coords);
+            const response = await axios.get(`https://us1.locationiq.com/v1/reverse?key=${import.meta.env.VITE_LOC_API_KEY}&lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json`);
+            setCity(response?.data?.address?.city);
+        });
+        if(!city){
+            dispatch(fetchData('Bengaluru'));
+        }
+        else{
+            dispatch(fetchData(city));
+        }
+    }, [city]);
 
     const currentData = useSelector((state : ReduxState) => state.forecast.data.currentData);
 

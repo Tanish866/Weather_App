@@ -30,9 +30,9 @@ const initialState : ForecastDataState = {
     }
 };
 
-export const fetchData = createAsyncThunk("data/fetch", async () => {
+export const fetchData = createAsyncThunk("data/fetch", async (city: String) => {
     try {
-        const response = await axiosInstance.get(`forecast.json?key=${import.meta.env.VITE_API_URL}&q=bengaluru&days=7&aqi=yes&alerts=yes`);
+        const response = await axiosInstance.get(`forecast.json?key=${import.meta.env.VITE_API_URL}&q=${city}&days=7&aqi=yes&alerts=yes`);
         console.log(response.data);
         return response.data; 
     } catch (error) {
