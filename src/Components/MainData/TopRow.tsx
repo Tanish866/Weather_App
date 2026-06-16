@@ -1,11 +1,24 @@
-function TopRow(){
+function TopRow({ activeTab, onTabChange }: {
+    activeTab: 'today' | 'week',
+    onTabChange: (tab: 'today' | 'week') => void
+}) {
     return (
         <div className="flex justify-between items-center w-full px-8 py-6 border-b border-gray-200">
             <div className="flex gap-6">
-                <div className="font-semibold text-xl text-black cursor-pointer">
+                <div
+                    onClick={() => onTabChange('today')}
+                    className={`font-semibold text-xl cursor-pointer ${
+                        activeTab === 'today' ? 'text-sky-400' : 'text-black'
+                    }`}
+                >
                     Today
                 </div>
-                <div className="font-semibold text-xl text-sky-400 cursor-pointer">
+                <div
+                    onClick={() => onTabChange('week')}
+                    className={`font-semibold text-xl cursor-pointer ${
+                        activeTab === 'week' ? 'text-sky-400' : 'text-black'
+                    }`}
+                >
                     Week
                 </div>
             </div>

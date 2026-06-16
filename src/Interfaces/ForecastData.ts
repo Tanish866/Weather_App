@@ -1,10 +1,15 @@
 import type CurrentDayForecast from "./CurrentDayForecast";
 import type DayForecast from "./DayForecast";
-import type ForecastDataState from "./ForecastDataState";
+import type HourForecast from "./HourForecast";
 
 export default interface ForecastData {
-    data: any;
-    location: {localtime: string, country: string, region: string, name: string},
+    location: {
+        localtime: string,
+        country: string,
+        region: string,
+        name: string
+    },
     dayForecast: DayForecast[],
+    hourForecast: HourForecast[],
     currentData: CurrentDayForecast,
 }

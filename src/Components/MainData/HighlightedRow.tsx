@@ -1,17 +1,19 @@
-import { useSelector } from "react-redux";
 import HighlightCard from "../HighlightCard";
-import type ReduxState from "../../Interfaces/ReduxState";
+import { useAppSelector } from "../../Hooks/useAppSelector";
 
-function HighlightedRow(){
-    const currentData = useSelector((state : ReduxState) => state.forecast.data.currentData);
-    function uvRange() {
-        if(currentData.uv <= 5) return "low";
-        else if(currentData.uv > 5 && currentData.uv < 8) return "moderate";
+function HighlightedRow() {
+    const currentData = useAppSelector((state) => state.forecast.data.currentData);
+
+    function uvRange(): string {
+        if (currentData.uv <= 5) return "low";
+        else if (currentData.uv < 8) return "moderate";
+        else return "high";
     }
-    return(
+
+    return (
         <div className="flex flex-wrap gap-4 w-full px-6 pb-6">
             <HighlightCard title="UV Index" data={currentData.uv.toString()} footer={uvRange()} />
-            <HighlightCard title="Wind Status" data={currentData.wind_kmph?.toString()} footer="km/h" />
+            <HighlightCard title="Wind Status" data={currentData.wind_kmph.toString()} footer="km/h" />
             <HighlightCard title="Humidity" data={currentData.humidity.toString() + "%"} footer="Low" />
             <HighlightCard title="Visibility" data={currentData.vis_km.toString()} footer="Low" />
             <HighlightCard title="Sunrise & Sunset" data={currentData.sunrise} footer={currentData.sunset} />

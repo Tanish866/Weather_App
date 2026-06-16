@@ -1,14 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import forecastReducer from "./Slices/ForecastSlice";
 
-import ForecastReducer from "./Slices/ForecastSlice";
-
-const store = configureStore({
+export const store = configureStore({
     reducer: {
-        forecast: ForecastReducer,
+        forecast: forecastReducer,
     },
-    devTools: true,
 });
 
-export const ApiDispatch = typeof store.dispatch;
-
-export default store;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

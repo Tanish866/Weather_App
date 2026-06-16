@@ -1,16 +1,20 @@
+import { useState } from "react";
 import HighlightedRow from "./HighlightedRow";
 import TopRow from "./TopRow";
 import WeekRow from "./WeekRow";
+import TodayRow from "./TodayRow";
 
-function MainData(){
+function MainData() {
+    const [activeTab, setActiveTab] = useState<'today' | 'week'>('today'); 
+
     return (
         <div className="flex flex-col justify-start items-center basis-9/12 text-black bg-[#f6f6f8] rounded-tr-3xl rounded-br-3xl h-full overflow-y-auto overflow-x-hidden w-full">
-            <TopRow/>
-            <WeekRow/>
+            <TopRow activeTab={activeTab} onTabChange={setActiveTab} /> 
+            {activeTab === 'today' ? <TodayRow /> : <WeekRow />} 
             <div className="px-6 py-2 w-full font-bold text-2xl">
                 Today's Highlights
             </div>
-            <HighlightedRow/>
+            <HighlightedRow />
         </div>
     );
 }

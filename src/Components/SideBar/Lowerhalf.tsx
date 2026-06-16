@@ -1,32 +1,30 @@
 import { BsDropletFill } from "react-icons/bs";
 import { IoIosCloudy } from "react-icons/io";
 import { MdLocationPin } from "react-icons/md";
-import { useSelector } from "react-redux";
-import type ReduxState from "../../Interfaces/ReduxState";
+import { useAppSelector } from "../../Hooks/useAppSelector"; 
 
-function Lowerhalf(){
-    const currentData = useSelector((state : ReduxState) => state.forecast.data.currentData);
-    const location = useSelector((state : ReduxState) => state.forecast.data.location);
+function Lowerhalf() {
+    const currentData = useAppSelector((state) => state.forecast.data.currentData);
+    const location = useAppSelector((state) => state.forecast.data.location);
+
     return (
         <div className="h-[50%] w-full p-4 flex flex-col justify-between">
             <div>
                 <div className="flex items-start gap-4 my-2">
                     <div className="mt-1">
-                        <IoIosCloudy/>
+                        <IoIosCloudy />
                     </div>
                     <div>{currentData.condition}</div>
                 </div>
-
                 <div className="flex items-start gap-4 my-2">
                     <div className="mt-1">
-                        <BsDropletFill/>
+                        <BsDropletFill />
                     </div>
                     <div>perc - {currentData.chance_of_rain}%</div>
                 </div>
             </div>
-
             <div className="flex items-center text-black gap-2 mt-auto">
-                <MdLocationPin/>
+                <MdLocationPin />
                 <span>{location.region}, {location.name}, {location.country}</span>
             </div>
         </div>

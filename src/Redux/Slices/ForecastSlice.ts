@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
 import axiosInstance from "../../Config/AxiosInstance";
 import type ForecastDataState from "../../Interfaces/ForecastDataState";
 
-const initialState : ForecastDataState = {
+const initialState: ForecastDataState = {
     status: 'default',
     data: {
         location: {
@@ -13,6 +12,7 @@ const initialState : ForecastDataState = {
             localtime: '',
         },
         dayForecast: [],
+        hourForecast: [], 
         currentData: {
             uv: 0,
             wind_kmph: 0,
@@ -30,60 +30,74 @@ const initialState : ForecastDataState = {
     }
 };
 
-export const fetchData = createAsyncThunk("data/fetch", async (city: String) => {
-    try {
-        const response = await axiosInstance.get(`forecast.json?key=${import.meta.env.VITE_API_URL}&q=${city}&days=7&aqi=yes&alerts=yes`);
-        console.log(response.data);
-        return response.data; 
-    } catch (error) {
-        console.log(error);
+export const fetchData = createAsyncThunk(
+    "data/fetch",
+    async (city: string, { rejectWithValue }) => {
+        try {
+            const response = await axiosInstance.get(
+                `forecast.json?key=${import.meta.env.VITE_API_URL}&q=${city}&days=7&aqi=yes&alerts=yes`
+            );
+            return response.data;
+        } catch (error: any) {
+            console.log("API Error:", error.response?.data);
+            return rejectWithValue(error.response?.data);
+        }
     }
-});
+);
 
 const forecastSlice = createSlice({
     name: 'forecast',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(fetchData.fulfilled, (state, action) =>{
-            if(!action.payload) return;
-            console.log(action);
+        builder
+            .addCase(fetchData.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchData.fulfilled, (state, action) => {
+                if (!action.payload) return;
 
-            const {location, forecast, current} = action.payload;
-            // setting location
-            state.data.location.country = location?.country;
-            state.data.location.region = location?.region;
-            state.data.location.name = location?.name;
-            state.data.location.localtime = location?.localtime;
+                const { location, forecast, current } = action.payload;
 
-            // setting dayforecast
-            state.data.dayForecast = forecast.forecastday.map((forecastItem : any) =>{
-                return{
+                state.data.location.country = location?.country;
+                state.data.location.region = location?.region;
+                state.data.location.name = location?.name;
+                state.data.location.localtime = location?.localtime;
+
+                state.data.dayForecast = forecast.forecastday.map((forecastItem: any) => ({
                     date: forecastItem.date,
                     avgtemp_c: forecastItem.day.avgtemp_c,
                     avgtemp_f: forecastItem.day.avgtemp_f,
                     condition: forecastItem.day.condition.text,
-                }
-            });
+                }));
 
-            // setting currrent
-            state.data.currentData.uv = current.uv;
-            state.data.currentData.wind_kmph = current.wind_kph;
-            state.data.currentData.humidity = current.humidity;
-            state.data.currentData.vis_km = current.vis_km;
-            state.data.currentData.aqi = current.air_quality.pm2_5;
-            state.data.currentData.sunrise = forecast.forecastday[0].astro.sunrise;
-            state.data.currentData.sunset = forecast.forecastday[0].astro.sunset;
-            state.data.currentData.temp_c = current.temp_c;
-            state.data.currentData.temp_f = current.temp_f;
-            state.data.currentData.condition = current.condition.text;
-            state.data.currentData.is_day = current.is_day;
-            state.data.currentData.chance_of_rain = forecast.forecastday[0].day.daily_chance_of_rain;
-            
-        })
-        .addCase(fetchData.pending, (state) =>{
-            state.status = 'loading';
-        });
+                // ✅ added hourForecast
+                state.data.hourForecast = forecast.forecastday[0].hour.map((hourItem: any) => ({
+                    time: hourItem.time,
+                    temp_c: hourItem.temp_c,
+                    temp_f: hourItem.temp_f,
+                    condition: hourItem.condition.text,
+                    is_day: hourItem.is_day,
+                }));
+
+                state.data.currentData.uv = current.uv;
+                state.data.currentData.wind_kmph = current.wind_kph;
+                state.data.currentData.humidity = current.humidity;
+                state.data.currentData.vis_km = current.vis_km;
+                state.data.currentData.aqi = current.air_quality?.pm2_5 ?? 0;
+                state.data.currentData.sunrise = forecast.forecastday[0].astro.sunrise;
+                state.data.currentData.sunset = forecast.forecastday[0].astro.sunset;
+                state.data.currentData.temp_c = current.temp_c;
+                state.data.currentData.temp_f = current.temp_f;
+                state.data.currentData.condition = current.condition.text;
+                state.data.currentData.is_day = current.is_day;
+                state.data.currentData.chance_of_rain = forecast.forecastday[0].day.daily_chance_of_rain;
+
+                state.status = 'success';
+            })
+            .addCase(fetchData.rejected, (state) => {
+                state.status = 'failure';
+            });
     }
 });
 
