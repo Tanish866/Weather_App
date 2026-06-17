@@ -1,73 +1,112 @@
-# React + TypeScript + Vite
+# WeatherApp 🌤️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A weather forecast web application built with React and TypeScript that displays current conditions, 7-day forecasts, hourly breakdowns, and key weather highlights for any city worldwide.
 
-Currently, two official plugins are available:
+## 🔗 Live Demo
+[cirrus.vercel.app](https://cirrus.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📸 Preview
+![Cirrus Preview](./src/Assets/preview.png)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 🔍 Search weather by city name
+- 🌡️ Toggle between °C and °F
+- 📅 7-day weekly forecast
+- 🕐 24-hour hourly forecast (Today tab)
+- 💧 Humidity, UV Index, Wind Speed, Visibility
+- 🌅 Sunrise & Sunset times
+- 🌫️ Air Quality Index (PM2.5)
+- 📍 Location detection via Geolocation API
+- 🎨 Glassmorphism UI with dynamic weather icons
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+| Category | Technology |
+|---|---|
+| Framework | React 18 + TypeScript |
+| State Management | Redux Toolkit |
+| Styling | Tailwind CSS |
+| HTTP Client | Axios |
+| Weather Data | WeatherAPI.com |
+| Build Tool | Vite |
+| Deployment | Vercel |
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 📁 Project Structure
+```
+src/
+├── Assets/                 
+├── Components/
+│   ├── MainData/
+│   │   ├── HighlightedRow.tsx   
+│   │   ├── TodayRow.tsx        
+│   │   ├── TopRow.tsx          
+│   │   └── WeekRow.tsx      
+│   ├── SideBar/
+│   │   ├── Lowerhalf.tsx     
+│   │   └── Upperhalf.tsx   
+│   ├── HighlightCard.tsx
+│   ├── HourCard.tsx         
+│   └── TempCard.tsx    
+├── Config/
+│   └── AxiosInstance.ts   
+├── Hooks/
+│   ├── useAppDispatch.ts
+│   └── useAppSelector.ts        
+├── Interfaces/
+│   ├── CurrentDayForecast.ts  
+│   ├── DayForecast.ts       
+│   ├── ForecastData.ts   
+│   ├── ForecastDataState.ts 
+│   └── HourForecast.ts       
+├── Pages/
+│   └── Home.tsx             
+└── Redux/
+    ├── Slices/
+    │   └── ForecastSlice.ts   
+    └── store.ts             
+```
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js v18+
+- npm or yarn
+- WeatherAPI.com API key (free at [weatherapi.com](https://www.weatherapi.com))
+
+### Installation
+
+1. **Clone the repository**
+```bash
+git clone git@github.com:Tanish866/Weather_App.git
+cd Weather_App
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. **Install dependencies**
+```bash
+npm install
 ```
+
+3. **Create a `.env` file in the root directory**
+```env
+VITE_API_URL=your_weatherapi_key_here
+```
+
+4. **Start the development server**
+```bash
+npm run dev
+```
+
+5. **Open your browser**
+```
+http://localhost:5173
+```
+
+
