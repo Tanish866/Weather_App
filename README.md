@@ -1,14 +1,14 @@
 # WeatherApp 🌤️
-
 A weather forecast web application built with React and TypeScript that displays current conditions, 7-day forecasts, hourly breakdowns, and key weather highlights for any city worldwide.
 
 ## 🔗 Live Demo
-[cirrus.vercel.app](https://cirrus.vercel.app)
+https://weather-app-three-kappa-12.vercel.app/
 
 ## 📸 Preview
-![Cirrus Preview](./src/Assets/preview.png)
-
----
+<p align="center">
+  <img src="./src/Assets/preview1.png" width="48%" />
+  <img src="./src/Assets/preview2.png" width="48%" />
+</p>
 
 ## ✨ Features
 
