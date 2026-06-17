@@ -25,7 +25,7 @@ function MainData({ tempUnit, onUnitChange }: {
             <div className="px-6 py-2 w-full font-bold text-2xl">
                 Today's Highlights
             </div>
-            <HighlightedRow tempUnit={tempUnit} />
+            <HighlightedRow />
         </div>
     );
 }

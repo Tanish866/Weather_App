@@ -1,7 +1,7 @@
 import HighlightCard from "../HighlightCard";
 import { useAppSelector } from "../../Hooks/useAppSelector";
 
-function HighlightedRow({ tempUnit }: { tempUnit: 'C' | 'F' }) { 
+function HighlightedRow() {  
     const currentData = useAppSelector((state) => state.forecast.data.currentData);
 
     function uvRange(): string {
