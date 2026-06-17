@@ -2,7 +2,7 @@ import { useAppSelector } from "../../Hooks/useAppSelector";
 import HourCard from "../HourCard";
 
 function formatHour(time: string): string {
-    const date = new Date(time.replace(' ', 'T')); 
+    const date = new Date(time.replace(' ', 'T'));
     return date.toLocaleTimeString('en-US', {
         hour: '2-digit',
         minute: '2-digit',
@@ -10,7 +10,7 @@ function formatHour(time: string): string {
     });
 }
 
-function TodayRow() {
+function TodayRow({ tempUnit }: { tempUnit: 'C' | 'F' }) {
     const hourForecast = useAppSelector((state) => state.forecast.data.hourForecast);
 
     return (
@@ -19,7 +19,11 @@ function TodayRow() {
                 <HourCard
                     key={hour.time}
                     time={formatHour(hour.time)}
-                    temperature={hour.temp_c.toString()}
+                    temperature={tempUnit === 'C'  
+                        ? hour.temp_c.toString()
+                        : hour.temp_f.toString()
+                    }
+                    unit={tempUnit}
                     condition={hour.condition}
                     is_day={hour.is_day}
                 />

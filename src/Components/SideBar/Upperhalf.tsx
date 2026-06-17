@@ -6,13 +6,15 @@ import { fetchData } from "../../Redux/Slices/ForecastSlice";
 import { useAppDispatch } from "../../Hooks/useAppDispatch";
 import { useAppSelector } from "../../Hooks/useAppSelector";
 
-function Upperhalf() {
+function Upperhalf({ tempUnit }: { tempUnit: 'C' | 'F' }) {
     const dispatch = useAppDispatch();
     const [city, setCity] = useState<string>('');
     const [inputValue, setInputValue] = useState<string>('');
 
     useEffect(() => {
-
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position.coords);
+        });
         dispatch(fetchData(city || 'Bengaluru'));
     }, [city, dispatch]);
 
@@ -49,8 +51,10 @@ function Upperhalf() {
 
             <div className="flex flex-col items-start">
                 <div className="font-semibold text-black flex items-start">
-                    <div className="text-8xl">{currentData.temp_c}</div>
-                    <div className="text-7xl">°C</div>
+                    <div className="text-8xl">
+                        {tempUnit === 'C' ? currentData.temp_c : currentData.temp_f}
+                    </div>
+                    <div className="text-7xl">°{tempUnit}</div>
                 </div>
                 <div className="text-black text-xl">
                     {currentData.condition}
@@ -59,5 +63,4 @@ function Upperhalf() {
         </div>
     );
 }
-
 export default Upperhalf;

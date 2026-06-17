@@ -1,17 +1,9 @@
 import { useAppSelector } from "../../Hooks/useAppSelector";
 import TempCard from "../TempCard";
 
-const weekdays = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-];
+const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-function WeekRow() {
+function WeekRow({ tempUnit }: { tempUnit: 'C' | 'F' }) { 
     const dayForecast = useAppSelector((state) => state.forecast.data.dayForecast);
 
     return (
@@ -20,7 +12,11 @@ function WeekRow() {
                 <TempCard
                     key={forecast.date}
                     title={weekdays[new Date(forecast.date).getDay()]}
-                    temperature={forecast.avgtemp_c.toString()}
+                    temperature={tempUnit === 'C'  
+                        ? forecast.avgtemp_c.toString()
+                        : forecast.avgtemp_f.toString()
+                    }
+                    unit={tempUnit}
                     condition={forecast.condition}
                 />
             ))}

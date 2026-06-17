@@ -11,26 +11,19 @@ function getWeatherImage(condition: string): string {
     return cloudyNight;
 }
 
-function TempCard({
-    temperature,
-    title,
-    condition,
-}: {
+function TempCard({ temperature, title, condition, unit }: {
     temperature: string,
     title: string,
     condition: string,
+    unit: 'C' | 'F', 
 }) {
     return (
         <div className="flex flex-col items-center justify-center bg-white rounded-2xl px-4 py-4 shadow-sm w-[150px]">
             <p className="font-semibold text-sm text-black">{title}</p>
-            <img
-                src={getWeatherImage(condition)}
-                alt={condition}
-                className="w-14 h-14 my-3"
-            />
+            <img src={getWeatherImage(condition)} alt={condition} className="w-14 h-14 my-3" />
             <p className="text-sm font-semibold text-black">
                 {temperature}
-                <span className="text-xs">°C</span>
+                <span className="text-xs">°{unit}</span> 
             </p>
         </div>
     );

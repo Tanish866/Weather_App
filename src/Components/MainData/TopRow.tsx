@@ -1,6 +1,8 @@
-function TopRow({ activeTab, onTabChange }: {
+function TopRow({ activeTab, onTabChange, tempUnit, onUnitChange }: {
     activeTab: 'today' | 'week',
-    onTabChange: (tab: 'today' | 'week') => void
+    onTabChange: (tab: 'today' | 'week') => void,
+    tempUnit: 'C' | 'F',
+    onUnitChange: (unit: 'C' | 'F') => void,
 }) {
     return (
         <div className="flex justify-between items-center w-full px-8 py-6 border-b border-gray-200">
@@ -23,10 +25,20 @@ function TopRow({ activeTab, onTabChange }: {
                 </div>
             </div>
             <div className="flex items-center gap-2">
-                <div className="w-9 h-9 rounded-full bg-black text-white flex p-5 items-center justify-center text-lg font-bold cursor-pointer">
+                <div
+                    onClick={() => onUnitChange('C')}
+                    className={`w-9 h-9 rounded-full flex p-5 items-center justify-center text-lg font-bold cursor-pointer transition-colors ${
+                        tempUnit === 'C' ? 'bg-black text-white' : 'text-gray-800'
+                    }`}
+                >
                     °C
                 </div>
-                <div className="w-9 h-9 rounded-full text-gray-800 flex items-center p-5 justify-center text-xl font-bold cursor-pointer">
+                <div
+                    onClick={() => onUnitChange('F')}
+                    className={`w-9 h-9 rounded-full flex p-5 items-center justify-center text-lg font-bold cursor-pointer transition-colors ${
+                        tempUnit === 'F' ? 'bg-black text-white' : 'text-gray-800'
+                    }`}
+                >
                     °F
                 </div>
             </div>
